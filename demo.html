@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Welcome to the Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .header {
+      position: relative;
+      text-align: center;
+      height: 120px; 
+      background: linear-gradient(to bottom, #00c6fb, #005bea);
+      color: #ffffff;
+      padding: 2  0px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header h2 {
+      font-size: 24px; 
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .header-logo img {
+      max-width: 150px; 
+      max-height: 150px;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .container.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333333;
+      margin-bottom: 20px;
+      transition: color 0.3s ease-in-out;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #666666;
+      transition: color 0.3s ease-in-out;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #dddddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .footer {
+      background-color: #333333;
+      color: #ffffff;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+   
+    @media only screen and (max-width: 600px) {
+      .header {
+        height: auto;
+        padding: 10px 0;
+      }
+
+      .header h2 {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+
+      .header p {
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .header-logo img {
+        max-width: 100px;
+        max-height: 100px;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        border-radius: 0;
+      }
+    }
+
+    .header-logo img:hover {
+      transform: rotate(360deg);
+      transition: transform 0.8s ease-out;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="header-overlay">
+      <h2>Welcome to the Quiz</h2>
+      <p>Test your knowledge and have fun!</p>
+    </div>
+    <div class="header-logo">
+      <img src="logo.png" alt="Website Logo">
+    </div>
+  </div>
+
+  <div class="container">
+    <h1 class="show">Quiz Details</h1>
+
+    <form id="quiz-form" action="blackpage.html" method="get" onsubmit="submitForm(event)">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" min="1" max="120" placeholder="Enter your age" required>
+
+      <label for="question-count">Number of Questions:</label>
+      <input type="number" id="question-count" name="questionCount" min="1" max="50" placeholder="Enter Question Count" value="question-count" required>
+
+      <label for="category">Category:</label>
+      <select id="category" name="category">
+        <option value="0">Any Category</option>
+        <option value="9">General Knowledge</option>
+        <option value="10">Entertainment: Books</option>
+        <option value="11">Entertainment: Film</option>
+        <option value="12">Entertainment: Music</option>
+        <option value="13">Entertainment: Musicals & Theatres</option>
+        <option value="14">Entertainment: Television</option>
+        <option value="15">Entertainment: Video Games</option>
+        <option value="16">Entertainment: Board Games</option>
+        <option value="17">Science & Nature</option>
+        <option value="18">Science: Computers</option>
+        <option value="19">Science: Mathematics</option>
+        <option value="20">Mythology</option>
+        <option value="21">Sports</option>
+        <option value="22">Geography</option>
+        <option value="23">History</option>
+        <option value="24">Politics</option>
+        <option value="25">Art</option>
+        <option value="26">Celebrities</option>
+        <option value="27">Animals</option>
+        <option value="28">Vehicles</option>
+        <option value="29">Entertainment: Comics</option>
+        <option value="30">Science: Gadgets</option>
+        <option value="31">Entertainment: Japanese Anime & Manga</option>
+        <option value="32">Entertainment: Cartoon & Animations</option>
+      </select>
+
+      <label for="difficulty-level">Difficulty Level:</label>
+      <select id="difficulty-level" name="difficultyLevel">
+        <option value="0">Any Difficulty</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+
+      <label for="question-type">Question Type:</label>
+      <select id="question-type" name="questionType">
+        <option value="0">Any Type</option>
+        <option value="multiple">Multiple Choice</option>
+        <option value="boolean">True or False</option>
+      </select>
+
+      <input type="submit" value="Start Quiz">
+    </form>
+
+  </div>
+
+  <div class="footer">
+    Welcome To Quiz Bolt 😊
+  </div>
+
+<script>
+    function submitForm(event) {
+      event.preventDefault(); // Prevent the form from submitting
+
+      // Get the form inputs
+      var name = document.getElementById("name").value;
+      var age = document.getElementById("age").value;
+      var questionCount = document.getElementById("question-count").value;
+      var category = document.getElementById("category").value;
+      var difficultyLevel = document.getElementById("difficulty-level").value;
+      var questionType = document.getElementById("question-type").value;
+
+      var apiUrl =
+        "https://opentdb.com/api.php?" +
+        "amount=" +
+        questionCount;
+
+      if (category !== "0") {
+        apiUrl += "&category=" + category;
+      }
+
+      if (difficultyLevel !== "0") {
+        apiUrl += "&difficulty=" + difficultyLevel;
+      }
+
+      if (questionType !== "0") {
+        apiUrl += "&type=" + questionType;
+      }
+
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.response_code === 1 && data.results.length === 0) {
+            alert("Sorry, This Combination is not available. Please try different parameters.");
+          } else {
+            var queryString =
+              "blackpage.html?name=" +
+              encodeURIComponent(name) +
+              "&age=" +
+              encodeURIComponent(age) +
+              "&questionCount=" +
+              encodeURIComponent(questionCount) +
+              "&category=" +
+              encodeURIComponent(category) +
+              "&difficultyLevel=" +
+              encodeURIComponent(difficultyLevel) +
+              "&questionType=" +
+              encodeURIComponent(questionType);
+
+            window.location.href = queryString;
+          }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var container = document.querySelector(".container");
+      var logo = document.querySelector(".header-logo img");
+
+      setTimeout(function () {
+        container.classList.add("show");
+      }, 1000);
+
+      setTimeout(function () {
+        logo.classList.add("show");
+      }, 300);
+    });
+  </script>
+</body>
+
+</html>

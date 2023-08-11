@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Quiz</title>
+  <style>
+    .welcome-message {
+      position: absolute;
+      top: 100px;
+      right: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .header-logo img {
+        width: auto;
+        height: auto;
+      }
+
+      .container {
+        width: 90%;
+        height: auto;
+        margin-bottom: 10px;
+        padding-bottom: 20px;
+      }
+
+      .result-box {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .welcome-message {
+        position: static;
+        margin-top: 10px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="header-logo">
+      <img src="logo.png" alt="Website Logo">
+    </div>
+    <div class="welcome-message">
+      Welcome, <span id="name"></span>!
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="quiz-container"></div>
+    <div id="result-container"></div>
+    <div id="result-box"></div>
+    <div id="scorecard-container"></div> 
+  </div>
+
+  <div class="footer">
+    All The Best 😊
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Function to extract query parameters from URL
+    function getQueryParams() {
+      var queryParams = {};
+      var urlParams = new URLSearchParams(window.location.search);
+      for (var [key, value] of urlParams) {
+        queryParams[key] = value;
+      }
+      return queryParams;
+    }
+
+    // Fetch the query parameters
+    var queryParams = getQueryParams();
+
+    // Access the values passed from blackpage.html
+    var name = queryParams.name;
+    var questionCount = queryParams.questionCount;
+    var difficultyLevel = queryParams.difficultyLevel;
+    var questionType = queryParams.questionType;
+
+    // Log the values for testing
+    // console.log("Name:", name);
+    // console.log("Question Count:", questionCount);
+    // console.log("Difficulty Level:", difficultyLevel);
+    // console.log("Question Type:", questionType);
+    // console.log("api url :", apiUrl)
+
+    // Get the name from query parameters or use a default value
+    var name = queryParams.name || "Guest";
+
+    // Set the name in the welcome message
+    var nameElement = document.getElementById("name");
+    nameElement.textContent = name;
+
+    // Add a script to show the container with transitions
+    document.addEventListener("DOMContentLoaded", function () {
+      var container = document.querySelector(".container");
+
+      setTimeout(function () {
+        container.classList.add("show");
+      }, 100);
+
+      setTimeout(function() {
+        var headerLogo = document.querySelector(".header-logo");
+        headerLogo.classList.add("show");
+      }, 300); // Delay in milliseconds 
+
+    });
+  </script> 
+</html>

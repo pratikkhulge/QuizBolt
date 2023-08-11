@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Quiz Answers</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .question {
+      margin: 20px 0;
+    }
+
+    h3 {
+      margin: 0;
+    }
+
+    h2 {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    #new-test-button,
+    #new-test-button-bottom {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #new-test-button:hover,
+    #new-test-button-bottom:hover {
+      background-color: #45a049;
+    }
+
+    .score-container-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .score-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      width: 100%;
+      max-width: 500px;
+      background-color: #f2f2f2;
+      border-radius: 10px;
+      padding: 0 20px;
+    }
+
+    .score-text {
+      color: red;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 1000;
+      font-size: 25px;
+      margin-right: 10px;
+    }
+
+    .footer {
+      text-align: center;
+    }
+
+    @media only screen and (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .header-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s ease;
+      }
+
+      #new-test-button,
+      #new-test-button-bottom {
+        margin: 20px 0;
+      }
+
+      .score-container {
+        width: 90%;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 16px;
+      }
+    }
+
+    @media only screen and (max-width: 400px) {
+      h2 {
+        font-size: 14px;
+      }
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-logo">
+      <img src="logo.png" alt="Website Logo">
+    </div>
+  </div>
+  <div class="score-container-container">
+    <div class="score-container">
+      <p id="score" class="score-text"></p>
+    </div>
+  </div>
+  <button id="new-test-button">Take New Test</button>
+  <h1>Quiz Answers</h1>
+  <div id="answers-container"></div>
+  
+  <button id="new-test-button-bottom">Take New Test</button>
+
+  <div class="footer">
+    Thank You😊
+  </div>
+
+  <script>
+     const quizData = JSON.parse(localStorage.getItem('quizData'));
+
+    displayAnswers();
+    displayScore();
+
+    function displayAnswers() {
+      const answersContainer = document.getElementById('answers-container');
+
+      quizData.forEach((question, index) => {
+        const questionElement = document.createElement('div');
+        questionElement.classList.add('question');
+
+        const questionNumber = document.createElement('h3');
+        questionNumber.textContent = `Question ${index + 1}`;
+        questionElement.appendChild(questionNumber);
+
+        const questionText = document.createElement('h2');
+        questionText.innerHTML = question.question;
+        questionElement.appendChild(questionText);
+
+        const correctAnswer = document.createElement('p');
+        correctAnswer.innerHTML = `<strong>Correct Answer:</strong> ${question.correct_answer}`;
+        questionElement.appendChild(correctAnswer);
+
+        const userAnswer = document.createElement('p');
+        const selectedAnswer = question.selected_answer || 'Not attempted';
+        const answerStatus = selectedAnswer === question.correct_answer ? 'Correct' : 'Incorrect';
+        userAnswer.innerHTML = `<strong>Your Answer:</strong> ${selectedAnswer} (${answerStatus})`;
+        questionElement.appendChild(userAnswer);
+
+        answersContainer.appendChild(questionElement);
+      });
+    }
+
+    function displayScore() {
+      const scoreElement = document.getElementById('score');
+      const totalQuestions = quizData.length;
+      const userScore = quizData.reduce((score, question) => {
+        if (question.selected_answer === question.correct_answer) {
+          return score + 1;
+        }
+        return score;
+      }, 0);
+      const scorePercentage = (userScore / totalQuestions) * 100;
+      scoreElement.textContent = `Score: ${userScore} out of ${totalQuestions} (${scorePercentage.toFixed(2)}%)`;
+    }
+
+    const newTestButton = document.getElementById('new-test-button');
+    newTestButton.addEventListener('click', () => {
+      window.location.href = 'demo.html';
+    });
+    
+    const newTestButtonBottom = document.getElementById('new-test-button-bottom');
+    newTestButtonBottom.addEventListener('click', () => {
+      window.location.href = 'demo.html';
+    });
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //   var headerLogo = document.querySelector(".header-logo");
+    //   headerLogo.classList.add("show");
+    // });
+
+
+  </script>
+</body>
+</html>

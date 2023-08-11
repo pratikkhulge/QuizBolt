@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Welcome to the Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Add some stylish CSS for the page */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 20px;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .logo.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .loading {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 20px;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .loading.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .clock {
+      width: 40px;
+      height: 40px;
+      margin: 20px auto;
+      border: 4px solid #ffffff;
+      border-radius: 50%;
+      animation: buffering 1.5s linear infinite;
+    }
+
+    @keyframes buffering {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Mobile-specific styles */
+    @media only screen and (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .loading {
+        font-size: 16px;
+        margin-top: 20px;
+      }
+
+      .clock {
+        width: 30px;
+        height: 30px;
+        margin: 10px auto;
+        border-width: 3px;
+      }
+    }
+
+    /* Properly align the logo and text */
+    .logo img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    #welcome-message {
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="logo.png" alt="Website Logo">
+    </div>
+    <h1 id="welcome-message"></h1>
+    <div id="loading" class="loading">
+      <div class="clock"></div>
+      <p>Result is loading...</p>
+    </div>
+  </div>
+
+  <script>
+    // Function to extract query parameters from URL
+    function getQueryParams() {
+      var queryParams = {};
+      var urlParams = new URLSearchParams(window.location.search);
+      for (var [key, value] of urlParams) {
+        queryParams[key] = value;
+      }
+      return queryParams;
+    }
+
+    // Fetch the quiz data from the URL query parameters
+    var queryParams = getQueryParams();
+    var name = queryParams.name;
+    var quizData = queryParams.quizData;
+    // console.log("Name:", name);
+
+    // Set the welcome message with the name
+    var welcomeMessage = document.getElementById("welcome-message");
+    welcomeMessage.textContent = "Thanks for taking the Quiz, " + name + "!";
+
+    // Add a script to show the container, logo, and loading message with transitions
+    document.addEventListener("DOMContentLoaded", function () {
+      var container = document.querySelector(".container");
+      var logo = document.querySelector(".logo");
+      var loading = document.querySelector("#loading");
+
+      setTimeout(function () {
+        container.classList.add("show");
+      }, 100);
+
+      setTimeout(function () {
+        logo.classList.add("show");
+      }, 300);
+
+      setTimeout(function () {
+        loading.classList.add("show");
+
+        setTimeout(function () {
+          var answersUrl = 'answers.html?' + encodeURIComponent(quizData);
+          window.location.href = answersUrl;
+        }, 5000); // Wait for 5 seconds before redirecting
+      }, 2000); // Adjust the delay as needed for the loading animation
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Welcome to the Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px; 
+      margin: 0 auto;
+      padding: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 20px;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .logo {
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .logo.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .loading {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 20px;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .loading.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .clock {
+      width: 40px;
+      height: 40px;
+      margin: 20px auto;
+      border: 4px solid #ffffff;
+      border-radius: 50%;
+      animation: buffering 1.5s linear infinite;
+    }
+
+
+    @media only screen and (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .logo {
+        margin-bottom: 10px;
+      }
+
+      .loading {
+        font-size: 16px;
+        margin-top: 20px;
+      }
+
+      .clock {
+        width: 30px;
+        height: 30px;
+        margin: 10px auto;
+        border-width: 3px;
+      }
+    }
+    .logo img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="logo.png" alt="Website Logo">
+    </div>
+    <h1 id="welcome-message"></h1>
+    <div id="loading" class="loading">
+      <div class="clock"></div>
+      <p>Quiz is loading...</p>
+    </div>
+  </div>
+
+  <script>
+    function getQueryParams() {
+      var queryParams = {};
+      var urlParams = new URLSearchParams(window.location.search);
+      for (var [key, value] of urlParams) {
+        queryParams[key] = value;
+      }
+      return queryParams;
+    }
+
+
+    var queryParams = getQueryParams();
+
+
+    var name = queryParams.name;
+    var age = queryParams.age;
+    var questionCount = queryParams.questionCount;
+    var category = queryParams.category;
+    var difficultyLevel = queryParams.difficultyLevel;
+    var questionType = queryParams.questionType;
+
+    // console.log("Name:", name);
+    // console.log("Age:", age);
+    // console.log("Category:", category);
+    // console.log("Question Count:", questionCount);
+    // console.log("Difficulty Level:", difficultyLevel);
+    // console.log("Question Type:", questionType);
+
+
+    var welcomeMessage = document.getElementById("welcome-message");
+    welcomeMessage.textContent = "Welcome " + name + "!";
+
+ 
+    document.addEventListener("DOMContentLoaded", function () {
+      var container = document.querySelector(".container");
+      var logo = document.querySelector(".logo");
+      var loading = document.querySelector("#loading");
+
+      setTimeout(function () {
+        container.classList.add("show");
+      }, 100);
+
+      setTimeout(function () {
+        logo.classList.add("show");
+      }, 300);
+
+      setTimeout(function () {
+        loading.classList.add("show");
+
+        setTimeout(function () {
+
+          // Redirect to index.html with the form values
+          var url =
+            "index.html?name=" +
+          encodeURIComponent(name) +
+          "&age=" +
+          encodeURIComponent(age) +
+          "&questionCount=" +
+          encodeURIComponent(questionCount) +
+          "&category=" +
+          encodeURIComponent(category) +
+          "&difficultyLevel=" +
+          encodeURIComponent(difficultyLevel) +
+          "&questionType=" +
+          encodeURIComponent(questionType);
+          window.location.href = url;
+        }, 5000); 
+      }, 2000);
+    });
+  </script>
+</body>
+
+</html>
